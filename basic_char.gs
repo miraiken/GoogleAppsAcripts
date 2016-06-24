@@ -1,4 +1,5 @@
 /*! (c) 2014-2016 みらい研究室実行委員会
+* Released under the MIT license.
 */
 /**
  * @brief detect type.
@@ -31,10 +32,13 @@ function concat_all_as_string(args) {
 }
 /**
  * @brief ひらがな⇒全角カタカナ, 全角英数⇒半角英数
- * @param args {string} target string
+ * @param args {string|string[]|string[][]} target string(s).
+ * @return {string|string[]|string[][]} converted string(s).
  */
 function phonetic(args) {
-  if (is("String", args)) {
+  var type = decltype(args);
+  switch (type) {
+  case "String":
     // ひらがな⇒カタカナ
     var s = [];
     for (var i = 0; i < args.length; i++) {
@@ -46,14 +50,26 @@ function phonetic(args) {
     return katakana.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
       return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
     });
-  } else {
-    return concat_all_as_string(args);
+  case "Array":
+    return function(){
+      var i;
+      var re = [];
+      for(i = 0; i < args.length; ++i) re.push(phonetic(args[i]));
+      return re;
+    }();
+  default:
+    return "error. unexpected type.";
   }
 }
+/**
+ * @brief 全角カタカナ⇒半角カタカナ
+ * @param args {string|string[]|string[][]} target string(s).
+ * @return {string|string[]|string[][]} converted string(s).
+ */
 function asc(args){
-  if (is("String", args)) {
-    // 全角カタカナ⇒半角カタカナ
-    
+  var type = decltype(args);
+  switch (type) {
+  case "String":
     //変換テーブル：2つの配列の要素数が一致しない場合空白文字が戻り値になる、かならず揃えること
     //replace_table_base:変換対象(検索)文字(wchar_t)
     //replace_table_to:置換文字(wchar_t)
@@ -131,14 +147,16 @@ function asc(args){
     .replace(/[ヨ-ロ]/g, function(s){
       return String.fromCharCode(s.charCodeAt(0) + 0xceae);
     });
-    
     return args;
-  } else {
-    var s = "";
-    for (var i = 0; i < args.length; i++) {
-      s += args[i];
-    }
-    return s;
+  case "Array":
+    return function(){
+      var i;
+      var re = [];
+      for(i = 0; i < args.length; ++i) re.push(asc(args[i]));
+      return re;
+    }();
+  default:
+    return "error. unexpected type.";
   }
 }
 /**
