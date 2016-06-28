@@ -32,8 +32,8 @@ function concat_all_as_string(args) {
 }
 /**
  * @brief ひらがな⇒全角カタカナ, 全角英数⇒半角英数
- * @param args {string|string[]|string[][]} target string(s).
- * @return {string|string[]|string[][]} converted string(s).
+ * @param args {string|string[]|string[][]} target string
+ * @return {string|string[]|string[][]}
  */
 function phonetic(args) {
   var type = decltype(args);
@@ -61,15 +61,12 @@ function phonetic(args) {
     return "error. unexpected type.";
   }
 }
-/**
- * @brief 全角カタカナ⇒半角カタカナ
- * @param args {string|string[]|string[][]} target string(s).
- * @return {string|string[]|string[][]} converted string(s).
- */
 function asc(args){
   var type = decltype(args);
   switch (type) {
   case "String":
+    // 全角カタカナ⇒半角カタカナ
+    
     //変換テーブル：2つの配列の要素数が一致しない場合空白文字が戻り値になる、かならず揃えること
     //replace_table_base:変換対象(検索)文字(wchar_t)
     //replace_table_to:置換文字(wchar_t)
