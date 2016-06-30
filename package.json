@@ -1,0 +1,24 @@
+{
+  "name": "gs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "range_checker.gs",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "diff": "^2.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miraiken/GoogleAppsAcripts.git"
+  },
+  "author": "yumetodo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miraiken/GoogleAppsAcripts/issues"
+  },
+  "homepage": "https://github.com/miraiken/GoogleAppsAcripts#readme"
+}
