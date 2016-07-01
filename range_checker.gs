@@ -16,11 +16,15 @@ function decltype(obj){
  * @param type {string} typename(String,Number,Boolean,Date,Error,Array,Function,RegExp,Object, ...)
  * @param obj {any} target variable
  * @return {boolean} 
-
  */
 function is(type, obj) {
   return obj !== undefined && obj !== null && decltype(obj) === type;
 }
+/**
+ * @brief convert 2d-array to 1d-array.
+ * @param {numbers[]|numbers[][]} range
+ * @returns {numbers[]}
+ */
 function range2array(range){
   if(!Array.isArray(range)) throw new TypeError("unexpected input. range:" + decltype(range));
   switch(decltype(range[0])){
@@ -39,6 +43,13 @@ function range2array(range){
     throw new TypeError("unexpected input. range:" + decltype(range));
   }
 }
+/**
+ * @brief check range and list-up missing numbers.
+ * @param {numbers[]|numbers[][]} numbers investigate target.
+ * @param {numbers} min
+ * @param {numbers} max
+ * @returns {string} missing numbers string(separated ,).
+ */
 function list_missing_num(numbers, min, max) {
   if(Array.isArray(numbers) && ((Array.isArray(numbers[0]) && is("Number",  numbers[0][0])) || is("Number",  numbers[0])) && is("Number", min) && is("Number", max)){
     var arr = range2array(numbers);
@@ -67,6 +78,11 @@ function list_missing_num(numbers, min, max) {
     throw new TypeError("unexpected input. numbers:" + decltype(numbers) + " min:" + decltype(min) + " max:" + decltype(max));
   }
 }
+/**
+ * @brief check range and list-up duplicated numbers.
+ * @param {numbers[]|numbers[][]} numbers investigate target.
+ * @returns
+ */
 function list_duplicate_num(numbers) {
   if(Array.isArray(numbers) && Array.isArray(numbers[0]) && is("Number",  numbers[0][0])){
     var re = range2array(numbers);
