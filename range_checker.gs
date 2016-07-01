@@ -22,21 +22,20 @@ function is(type, obj) {
   return obj !== undefined && obj !== null && decltype(obj) === type;
 }
 function range2array(range){
-  if(Array.isArray(range) && ((Array.isArray(range[0]) && is("Number",  range[0][0])) || is("Number",  range[0]))){
-    var arr = [];
-    var i;
-    var j;
-    for(i = 0; i < range.length; ++i){
-      if(is("Number",  range[0])){
-        arr.push(range[i]);
-      }
-      else{
-        for(j = 0; j < range[i].length; ++j) arr.push(range[i][j]);
-      }
+  if(!Array.isArray(range)) throw new TypeError("unexpected input. range:" + decltype(range));
+  switch(decltype(range[0])){
+  case "Number":
+    return range;
+  case "Array":
+    if(is("Number",  range[0][0])){
+      var arr = [];
+      var i;
+      var j;
+      for(i = 0; i < range.length; ++i) arr.push.apply(arr, range[i]);
       return arr;
     }
-  }
-  else{
+  /* FALL_THROUGH */
+  default:
     throw new TypeError("unexpected input. range:" + decltype(range));
   }
 }
@@ -75,7 +74,7 @@ function list_duplicate_num(numbers) {
     //重複のみをリスト
     //http://qiita.com/cocottejs/items/7afe6d5f27ee7c36c61f
     re = re.filter(function (x, i, self) {
-      return self.indexOf(x) !== self.lastIndexOf(x);
+      return self.indexOf(x) === i && i !== self.lastIndexOf(x);
     });
     return (re.length === 0) ? "nothing" : re.join();
   }
