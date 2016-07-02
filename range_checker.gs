@@ -98,6 +98,43 @@ function list_duplicate_num(numbers) {
     throw new TypeError("unexpected input. numbers:" + decltype(numbers));
   }
 }
+/**
+ * 
+ * @callback JudgeCallback
+ * @param {string} param
+ * @return {boolean}
+ */
+/**
+ * @brief check 2*n range and list-up when `cond_f` return true.
+ * @param {object[][]} params An array of pair of number and string.
+ * @param {JudgeCallback} cond_f A function whether list-up or not. 
+ * @return {numbers[]}
+ */
+function list_if(params, cond_f) {
+  if(Array.isArray(params) && 2 === params[0].length && Array.isArray(params[0]) && is("Number",  params[0][0]) && is("String", params[0][1]) && is("Function", cond_f)){
+    var i;
+    var re = [];
+    for(i = 0; i < params.length; ++i){
+      if(!is("Number", params[i][0]) || !is("String", params[i][1]) || 2 !== params[i].length){
+        throw new TypeError("unexpected input. params[" + i + "][0]:" + decltype(params[i][0]) + " params[" + i + "][1]:" + decltype(params[i][1]));
+      }
+      if(cond_f(params[i][1])) re.push(params[i][0]);
+    }
+    return re;
+  }
+  else{
+    throw new TypeError("unexpected input. params:" + decltype(params));
+  }
+}
+/**
+ * @brief check 2*n range and list-up when `params[i][1]` is equal to `check_string`.
+ * @param {object[][]} params
+ * @param {string} check_string
+ * @returns
+ */
+function list_if_equal(params, check_string){
+  return list_if(params, function(s){ return s === check_string; });
+}
 function testf(){
   var f = function(expression_statements, correct){ 
     var re = eval(expression_statements);
