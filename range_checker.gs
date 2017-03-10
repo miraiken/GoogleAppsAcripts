@@ -1,4 +1,4 @@
-/*! (c) 2014-2016 みらい研究室実行委員会
+/*! (c) 2014-2017 みらい研究室実行委員会
 * Released under the MIT license.
 */
 require("colors");
@@ -15,7 +15,7 @@ function decltype(obj){
  * @brief check type.
  * @param type {string} typename(String,Number,Boolean,Date,Error,Array,Function,RegExp,Object, ...)
  * @param obj {any} target variable
- * @return {boolean} 
+ * @return {boolean}
  */
 function is(type, obj) {
   return obj !== undefined && obj !== null && decltype(obj) === type;
@@ -99,7 +99,7 @@ function list_duplicate_num(numbers) {
   }
 }
 /**
- * 
+ *
  * @callback JudgeCallback
  * @param {string} param
  * @return {boolean}
@@ -107,7 +107,7 @@ function list_duplicate_num(numbers) {
 /**
  * @brief check 2*n range and list-up when `cond_f` return true.
  * @param {object[][]} params An array of pair of number and string.
- * @param {JudgeCallback} cond_f A function whether list-up or not. 
+ * @param {JudgeCallback} cond_f A function whether list-up or not.
  * @return {numbers[]}
  */
 function list_if(params, cond_f) {
@@ -136,7 +136,7 @@ function list_if_equal(params, check_string){
   return list_if(params, function(s){ return s === check_string; });
 }
 function testf(){
-  var f = function(expression_statements, correct){ 
+  var f = function(expression_statements, correct){
     var re = eval(expression_statements);
     if(re !== correct){
       jsdiff.diffChars(re, correct).forEach(function(part){

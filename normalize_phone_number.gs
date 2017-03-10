@@ -1,4 +1,4 @@
-/*! (c) 2014-2016 みらい研究室実行委員会
+/*! (c) 2014-2017 みらい研究室実行委員会
 * Released under the MIT license.
 */
 /**
@@ -13,7 +13,7 @@ function decltype(obj){
  * @brief check type.
  * @param type {string} typename(String,Number,Boolean,Date,Error,Array,Function,RegExp,Object, ...)
  * @param obj {any} target variable
- * @return {boolean} 
+ * @return {boolean}
 
  */
 function is(type, obj) {

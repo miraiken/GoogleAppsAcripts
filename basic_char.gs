@@ -1,4 +1,4 @@
-/*! (c) 2014-2016 みらい研究室実行委員会
+/*! (c) 2014-2017 みらい研究室実行委員会
 * Released under the MIT license.
 */
 /**
@@ -13,7 +13,7 @@ function decltype(obj){
  * @brief check type.
  * @param type {string} typename(String,Number,Boolean,Date,Error,Array,Function,RegExp,Object, ...)
  * @param obj {any} target variable
- * @return {boolean} 
+ * @return {boolean}
 
  */
 function is(type, obj) {
@@ -66,7 +66,7 @@ function asc(args){
   switch (type) {
   case "String":
     // 全角カタカナ⇒半角カタカナ
-    
+
     //変換テーブル：2つの配列の要素数が一致しない場合空白文字が戻り値になる、かならず揃えること
     //replace_table_base:変換対象(検索)文字(wchar_t)
     //replace_table_to:置換文字(wchar_t)
@@ -82,7 +82,7 @@ function asc(args){
     for(var i = 0; i < replace_table_to.length; i++){
       args = args.replace(new RegExp(String.fromCharCode(replace_table_base[i]), "g"), String.fromCharCode(replace_table_to[i]));
     }
-    
+
     args = args
     .replace(/ヴ/g, "ｳﾞ")
     .replace(/[ァ-オ]/g, function(s){
