@@ -65,6 +65,9 @@ function list_missing_num(numbers, min, max) {
     var push_back = function(min, max){
       for(var i = min; i <= max; ++i) re.push(i);
     };
+    if(arr[arr.length - 1] < min || max < arr[0]) {
+      return Array(max - min + 1).fill(0).map(function(_,i){ return i + min; }).join();
+    }
     for(i = 0; arr[i] < min; ++i);//skip
     for(j = min; i < arr.length && arr[i] <= max; j = arr[i] + 1, ++i) {
       if(0 !== arr[i] - j){
