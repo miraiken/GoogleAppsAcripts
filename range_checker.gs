@@ -145,16 +145,20 @@ function list_duplicate_num(numbers) {
  * @return {numbers[]}
  */
 function list_if(params, cond_f) {
-  if(Array.isArray(params) && 2 === params[0].length && Array.isArray(params[0]) && is("Number",  params[0][0]) && is("String", params[0][1]) && is("Function", cond_f)){
+  if(Array.isArray(params) && 2 === params[0].length && Array.isArray(params[0]) && is("Function", cond_f)){
     var i;
+    /** @type {numbers[]} */
     var re = [];
     for(i = 0; i < params.length; ++i){
-      if(!is("Number", params[i][0]) || !is("String", params[i][1]) || 2 !== params[i].length){
+      var first_type = decltype(params[i][0]);
+      if(!("Number" === first_type || "String" === first_type) || !is("String", params[i][1]) || 2 !== params[i].length){
         throw new TypeError("unexpected input. params[" + i + "][0]:" + decltype(params[i][0]) + " params[" + i + "][1]:" + decltype(params[i][1]));
       }
-      if(cond_f(params[i][1])) re.push(params[i][0]);
+      if(cond_f(params[i][1])) {
+        re.push(("String" === first_type) ? parseInt(params[i][0], 10) : params[i][0]);
+      }
     }
-    return re;
+    return re.join();
   }
   else{
     throw new TypeError("unexpected input. params:" + decltype(params));
