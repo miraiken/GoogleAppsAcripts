@@ -30,28 +30,54 @@ function range2array(range){
   switch(decltype(range[0])){
   case "Number":
     return range;
+  case "String":
+    return range.map(function(e){ return parseInt(e, 10); });
   case "Array":
-    if(is("Number",  range[0][0])){
-      var arr = [];
-      var i;
-      var j;
-      for(i = 0; i < range.length; ++i) arr.push.apply(arr, range[i]);
-      return arr;
+    switch(decltype(range[0][0])){
+    case "Number":
+      return function(){
+        var arr = [];
+        var i;
+        var l = range.length;
+        for(i = 0; i < l; ++i) arr.push.apply(arr, range[i]);
+        return arr;
+      }();
+    case "String":
+      return function(){
+        var arr = [];
+        var i;
+        var l = range.length;
+        for(i = 0; i < l; ++i) arr.push.apply(arr, range[i].map(function(e){ return parseInt(e, 10); }));
+        return arr;
+      }();
+    default:
+      throw new TypeError(
+        "unexpected input. range:" + decltype(range)
+         + " range[0]:" + decltype(range[0])
+         + " range[0][0]:" + decltype(range[0][0])
+      );
     }
-  /* FALL_THROUGH */
   default:
-    throw new TypeError("unexpected input. range:" + decltype(range));
+      throw new TypeError(
+        "unexpected input. range:" + decltype(range)
+         + " range[0]:" + decltype(range[0])
+      );
   }
 }
 /**
  * @brief check range and list-up missing numbers.
- * @param {numbers[]|numbers[][]} numbers investigate target.
+ * @param {numbers[]|numbers[][]|string[]|string[][]} numbers investigate target.
  * @param {numbers} min
  * @param {numbers} max
  * @returns {string} missing numbers string(separated ,).
  */
 function list_missing_num(numbers, min, max) {
-  if(Array.isArray(numbers) && ((Array.isArray(numbers[0]) && is("Number",  numbers[0][0])) || is("Number",  numbers[0])) && is("Number", min) && is("Number", max)){
+  if(
+    Array.isArray(numbers) && is("Number", min) && is("Number", max) && (
+      (Array.isArray(numbers[0]) && (is("Number",  numbers[0][0]) || is("String",  numbers[0][0])))
+      || is("Number",  numbers[0]) || is("String",  numbers[0])
+    )
+  ){
     var arr = range2array(numbers);
     var i;
     var j;
@@ -87,7 +113,12 @@ function list_missing_num(numbers, min, max) {
  * @returns
  */
 function list_duplicate_num(numbers) {
-  if(Array.isArray(numbers) && Array.isArray(numbers[0]) && is("Number",  numbers[0][0])){
+  if(
+    Array.isArray(numbers) && (
+      (Array.isArray(numbers[0]) && (is("Number",  numbers[0][0]) || is("String",  numbers[0][0])))
+      || is("Number",  numbers[0]) || is("String",  numbers[0])
+    )
+  ){
     var re = range2array(numbers);
     re.sort(function(a, b){ return a- b; });
     //重複のみをリスト
