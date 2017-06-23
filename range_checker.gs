@@ -158,10 +158,10 @@ function list_if(params, cond_f) {
         re.push(("String" === first_type) ? parseInt(params[i][0], 10) : params[i][0]);
       }
     }
-    return re.join();
+    return re.sort(function(a,b){return a - b});
   }
   else{
-    throw new TypeError("unexpected input. params:" + decltype(params));
+    throw new TypeError("unexpected input. params:" + decltype(params)).join();
   }
 }
 /**
