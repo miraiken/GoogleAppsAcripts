@@ -145,7 +145,7 @@ function list_duplicate_num(numbers) {
  * @return {numbers[]}
  */
 function list_if(params, cond_f) {
-  if(Array.isArray(params) && 2 === params[0].length && Array.isArray(params[0]) && is("Function", cond_f)){
+  if(Array.isArray(params) && Array.isArray(params[0]) && 2 === params[0].length && is("Function", cond_f)){
     var i;
     /** @type {numbers[]} */
     var re = [];
