@@ -69,7 +69,7 @@ function range2array(range){
  * @param {numbers[]|numbers[][]|string[]|string[][]} numbers investigate target.
  * @param {numbers} min
  * @param {numbers} max
- * @returns {string} missing numbers string(separated ,).
+ * @returns {numbers[]}
  */
 function list_missing_num(numbers, min, max) {
   if(
@@ -92,7 +92,7 @@ function list_missing_num(numbers, min, max) {
       for(var i = min; i <= max; ++i) re.push(i);
     };
     if(arr[arr.length - 1] < min || max < arr[0]) {
-      return Array(max - min + 1).fill(0).map(function(_,i){ return i + min; }).join();
+      return Array(max - min + 1).fill(0).map(function(_,i){ return i + min; });
     }
     for(i = 0; arr[i] < min; ++i);//skip
     for(j = min; i < arr.length && arr[i] <= max; j = arr[i] + 1, ++i) {
@@ -101,16 +101,27 @@ function list_missing_num(numbers, min, max) {
       }
     }
     push_back(arr[i - 1] + 1, max);
-    return (re.length === 0) ? "nothing" : re.join();
+    return (re.length === 0) ? [] : re;
   }
   else{
     throw new TypeError("unexpected input. numbers:" + decltype(numbers) + " min:" + decltype(min) + " max:" + decltype(max));
   }
 }
 /**
+ * @brief check range and list-up missing numbers.
+ * @param {numbers[]|numbers[][]|string[]|string[][]} numbers investigate target.
+ * @param {numbers} min
+ * @param {numbers} max
+ * @returns {string} missing numbers string(separated ,).
+ */
+function list_missing_num_as_string(numbers, min, max) {
+  var re = list_missing_num(numbers, min, max);
+  return (0 !== re.length) ? re.join() : "nothing";
+}
+/**
  * @brief check range and list-up duplicated numbers.
  * @param {numbers[]|numbers[][]} numbers investigate target.
- * @returns
+ * @returns {numbers[]}
  */
 function list_duplicate_num(numbers) {
   if(
@@ -123,14 +134,22 @@ function list_duplicate_num(numbers) {
     re.sort(function(a, b){ return a- b; });
     //重複のみをリスト
     //http://qiita.com/cocottejs/items/7afe6d5f27ee7c36c61f
-    re = re.filter(function (x, i, self) {
+    return re.filter(function (x, i, self) {
       return self.indexOf(x) === i && i !== self.lastIndexOf(x);
     });
-    return (re.length === 0) ? "nothing" : re.join();
   }
   else{
     throw new TypeError("unexpected input. numbers:" + decltype(numbers));
   }
+}
+/**
+ * @brief check range and list-up duplicated numbers.
+ * @param {numbers[]|numbers[][]} numbers investigate target.
+ * @returns {string} duplicated numbers string(separated ,).
+ */
+function list_duplicate_num_as_string(numbers) {
+  var re = list_duplicate_num(numbers);
+  return (re.length === 0) ? "nothing" : re.join();
 }
 /**
  *
@@ -168,10 +187,19 @@ function list_if(params, cond_f) {
  * @brief check 2*n range and list-up when `params[i][1]` is equal to `check_string`.
  * @param {object[][]} params
  * @param {string} check_string
- * @returns
+ * @returns  {numbers[]}
  */
-function list_if_equal(params, check_string){
-  return list_if(params, function(s){ return s === check_string; }).join();
+function list_if_equal(params, check_string) {
+  return list_if(params, function(s){ return s === check_string; });
+}
+/**
+ * @brief check 2*n range and list-up when `params[i][1]` is equal to `check_string`.
+ * @param {object[][]} params
+ * @param {string} check_string
+ * @returns {string} numbers string(separated ,).
+ */
+function list_if_equal_as_string(params, check_string) {
+  return list_if_equal(params, check_string).join();
 }
 function testf(){
   var f = function(expression_statements, correct){
@@ -191,11 +219,11 @@ function testf(){
       console.log("pass.");
     }
   };
-  f("list_missing_num([1, 2, 3], 1, 3)", "nothing");
-  f("list_missing_num([1, 3, 4], 1, 4)", "2");
-  f("list_missing_num([1, 3, 4], 5, 6)", "5,6");
-  f("list_missing_num([3, 4, 8, 11], 1, 12)", "1,2,5,6,7,9,10,12");
-  f("list_missing_num([3, 4, 8, 11, 13], 1, 12)", "1,2,5,6,7,9,10,12");
-  f("list_missing_num([3, 4, 8, 11, 13, 14, 15, 17, 18, 19, 20, 21, 23, 16, 15, 24, 32, 27], 1, 33)", "1,2,5,6,7,9,10,12,22,25,26,28,29,30,31,33");
+  f("list_duplicate_num_as_string([1, 2, 3], 1, 3)", "nothing");
+  f("list_duplicate_num_as_string([1, 3, 4], 1, 4)", "2");
+  f("list_duplicate_num_as_string([1, 3, 4], 5, 6)", "5,6");
+  f("list_duplicate_num_as_string([3, 4, 8, 11], 1, 12)", "1,2,5,6,7,9,10,12");
+  f("list_duplicate_num_as_string([3, 4, 8, 11, 13], 1, 12)", "1,2,5,6,7,9,10,12");
+  f("list_duplicate_num_as_string([3, 4, 8, 11, 13, 14, 15, 17, 18, 19, 20, 21, 23, 16, 15, 24, 32, 27], 1, 33)", "1,2,5,6,7,9,10,12,22,25,26,28,29,30,31,33");
 }
 testf();
