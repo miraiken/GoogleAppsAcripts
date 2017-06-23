@@ -171,7 +171,7 @@ function list_if(params, cond_f) {
  * @returns
  */
 function list_if_equal(params, check_string){
-  return list_if(params, function(s){ return s === check_string; });
+  return list_if(params, function(s){ return s === check_string; }).join();
 }
 function testf(){
   var f = function(expression_statements, correct){
