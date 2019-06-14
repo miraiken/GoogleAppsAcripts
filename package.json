@@ -4,8 +4,8 @@
   "description": "",
   "main": "range_checker.gs",
   "dependencies": {
-    "colors": "^1.1.2",
-    "diff": "^2.2.3"
+    "colors": "^1.3.3",
+    "diff": "^4.0.1"
   },
   "devDependencies": {},
   "scripts": {
